@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MOCK_USER } from "@/lib/mock-data"
 import { cn } from "@/lib/utils"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   Tooltip,
   TooltipContent,
@@ -21,18 +21,29 @@ interface TopNavProps {
 
 export function TopNav({ focusMode, setFocusMode }: TopNavProps) {
   const [showShortcuts, setShowShortcuts] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const [dateTime, setDateTime] = useState({ date: "", time: "" })
 
-  const currentDate = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric"
-  })
-
-  const currentTime = new Date().toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true
-  })
+  useEffect(() => {
+    setMounted(true)
+    const updateDateTime = () => {
+      setDateTime({
+        date: new Date().toLocaleDateString("en-US", {
+          weekday: "long",
+          month: "long",
+          day: "numeric"
+        }),
+        time: new Date().toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true
+        })
+      })
+    }
+    updateDateTime()
+    const interval = setInterval(updateDateTime, 1000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <>
@@ -70,7 +81,7 @@ export function TopNav({ focusMode, setFocusMode }: TopNavProps) {
 
           {/* Center - Date/Time */}
           <div className="font-mono text-sm text-[var(--text-muted)]">
-            {currentDate} · {currentTime}
+            {mounted ? `${dateTime.date} · ${dateTime.time}` : "Loading..."}
           </div>
 
           {/* Right side */}

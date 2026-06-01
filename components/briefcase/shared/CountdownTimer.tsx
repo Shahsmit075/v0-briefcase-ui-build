@@ -11,15 +11,22 @@ interface CountdownTimerProps {
 }
 
 export function CountdownTimer({ minutes, size = "md", showLabel = true, className }: CountdownTimerProps) {
+  const [mounted, setMounted] = useState(false)
   const [timeLeft, setTimeLeft] = useState(minutes * 60)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    
     const timer = setInterval(() => {
       setTimeLeft(prev => Math.max(0, prev - 1))
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [mounted])
 
   const mins = Math.floor(timeLeft / 60)
   const secs = timeLeft % 60
@@ -29,6 +36,20 @@ export function CountdownTimer({ minutes, size = "md", showLabel = true, classNa
     sm: "text-sm",
     md: "text-base",
     lg: "text-2xl"
+  }
+
+  // Show placeholder during SSR to avoid hydration mismatch
+  if (!mounted) {
+    return (
+      <div className={cn("font-mono", className)}>
+        {showLabel && (
+          <span className="mr-1 text-[var(--accent-gold)]">IN</span>
+        )}
+        <span className={cn(sizeClasses[size], "font-semibold tabular-nums text-[var(--accent-gold)]")}>
+          --:--
+        </span>
+      </div>
+    )
   }
 
   return (

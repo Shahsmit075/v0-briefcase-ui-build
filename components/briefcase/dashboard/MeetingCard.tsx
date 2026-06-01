@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -32,16 +31,18 @@ export function MeetingCard({ meeting, isActive, onClick, isGenerating, onGenera
   }
 
   return (
-    <motion.div
-      whileHover={{ x: 2, backgroundColor: "var(--bg-card-hover)" }}
+    <div
       className={cn(
-        "bg-white rounded-lg border border-[var(--border-subtle)] p-4 cursor-pointer transition-all border-l-4",
+        "bg-white rounded-lg border border-[var(--border-subtle)] p-4 cursor-pointer transition-all duration-200 border-l-4 hover:translate-x-0.5 hover:bg-[var(--bg-card-hover)]",
         borderColor[meeting.importance],
         isActive && "ring-2 ring-[var(--accent-gold)] ring-offset-2",
         isPast && "opacity-60",
         isNext && "border-l-[var(--accent-gold)]"
       )}
-      onClick={onClick}
+      onClick={() => {
+        console.log("[v0] MeetingCard clicked:", meeting.id, meeting.title)
+        onClick()
+      }}
     >
       {/* Header Row */}
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -169,6 +170,6 @@ export function MeetingCard({ meeting, isActive, onClick, isGenerating, onGenera
           <CountdownTimer minutes={meeting.minutesUntil} size="md" />
         </div>
       )}
-    </motion.div>
+    </div>
   )
 }
