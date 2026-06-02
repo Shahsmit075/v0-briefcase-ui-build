@@ -108,7 +108,7 @@ export function FocusMode({
                 </div>
               )}
 
-              <div className="bg-white rounded-xl border border-[var(--border-subtle)] p-8 shadow-lg">
+              <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border-subtle)] p-8">
                 <BriefingHeader
                   meeting={meeting}
                   briefing={briefing}

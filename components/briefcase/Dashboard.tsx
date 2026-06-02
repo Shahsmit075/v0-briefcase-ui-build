@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react"
 import { TopNav } from "./dashboard/TopNav"
 import { MetricsNavbar } from "./dashboard/MetricsNavbar"
-import { AlertBanner } from "./dashboard/AlertBanner"
+import { AlertCarousel } from "./dashboard/AlertCarousel"
 import { MeetingTimeline } from "./dashboard/MeetingTimeline"
 import { MeetingSearch } from "./dashboard/MeetingSearch"
 import { MeetingSuggestions } from "./dashboard/MeetingSuggestions"
@@ -143,8 +143,8 @@ export function Dashboard() {
           {/* Meeting Suggestions */}
           <MeetingSuggestions meetings={filteredMeetings.filter(m => !m.isPast)} />
           
-          {/* Alerts */}
-          <AlertBanner 
+          {/* Alerts Carousel */}
+          <AlertCarousel 
             dismissedAlerts={dismissedAlerts} 
             setDismissedAlerts={setDismissedAlerts} 
           />
