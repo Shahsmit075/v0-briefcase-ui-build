@@ -16,11 +16,11 @@ export function HowToOpenSection({ opener, emailThreadsFound }: HowToOpenSection
       transition={{ delay: 0.4 }}
       className="mb-8"
     >
-      <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-5">
         HOW TO OPEN
       </h2>
-      <div className="bg-gradient-to-br from-[var(--bg-primary)] to-white rounded-lg p-6 border border-[var(--border-subtle)] relative">
-        <Quote className="w-6 h-6 text-[var(--accent-gold)]/30 absolute top-4 left-4" />
+      <div className="bg-[var(--bg-elevated)] rounded-lg p-6 border border-[var(--border-subtle)] relative">
+        <Quote className="w-6 h-6 text-[var(--accent-gold)]/20 absolute top-4 left-4" />
         <blockquote className="text-lg text-[var(--text-primary)] leading-relaxed italic pl-8 pr-4">
           &quot;{opener}&quot;
         </blockquote>

@@ -57,7 +57,7 @@ export function CountdownTimer({ minutes, size = "md", showLabel = true, classNa
       {showLabel && (
         <span className={cn(
           "mr-1",
-          isUrgent ? "text-red-500" : "text-[var(--accent-gold)]"
+          isUrgent ? "text-[var(--critical-red)]" : "text-[var(--accent-gold)]"
         )}>
           IN
         </span>
@@ -65,7 +65,7 @@ export function CountdownTimer({ minutes, size = "md", showLabel = true, classNa
       <span className={cn(
         sizeClasses[size],
         "font-semibold tabular-nums",
-        isUrgent ? "text-red-500 animate-pulse" : "text-[var(--accent-gold)]"
+        isUrgent ? "text-[var(--critical-red)] animate-pulse" : "text-[var(--accent-gold)]"
       )}>
         {mins.toString().padStart(2, "0")}:{secs.toString().padStart(2, "0")}
       </span>

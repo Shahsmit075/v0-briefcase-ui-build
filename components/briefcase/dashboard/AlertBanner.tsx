@@ -20,18 +20,18 @@ export function AlertBanner({ dismissedAlerts, setDismissedAlerts }: AlertBanner
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2.5">
       {visibleAlerts.map((alert) => {
         const typeStyles = {
-          critical: "bg-red-50 border-red-200 text-red-700",
-          warning: "bg-amber-50 border-amber-200 text-amber-700",
-          info: "bg-blue-50 border-blue-200 text-blue-700"
+          critical: "bg-[var(--critical-bg)] border-[var(--critical-red)]/30 text-[var(--critical-red)]",
+          warning: "bg-[var(--warning-bg)] border-[var(--warning-amber)]/30 text-[var(--warning-amber)]",
+          info: "bg-[var(--bg-elevated)] border-[var(--important-blue)]/30 text-[var(--important-blue)]"
         }
 
         const iconColor = {
-          critical: "text-red-500",
-          warning: "text-amber-500",
-          info: "text-blue-500"
+          critical: "text-[var(--critical-red)]",
+          warning: "text-[var(--warning-amber)]",
+          info: "text-[var(--important-blue)]"
         }
 
         return (

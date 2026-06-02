@@ -1,15 +1,17 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { TopNav } from "./dashboard/TopNav"
-import { StatsGrid } from "./dashboard/StatsGrid"
+import { MetricsNavbar } from "./dashboard/MetricsNavbar"
 import { AlertBanner } from "./dashboard/AlertBanner"
 import { MeetingTimeline } from "./dashboard/MeetingTimeline"
+import { MeetingSearch } from "./dashboard/MeetingSearch"
+import { MeetingSuggestions } from "./dashboard/MeetingSuggestions"
 import { BriefingPanel } from "./briefing/BriefingPanel"
 import { FocusMode } from "./focus/FocusMode"
-import { MOCK_MEETINGS, ACTIVE_BRIEFING, WASTEFUL_BRIEFING, RELATIONSHIP_HEALTH } from "@/lib/mock-data"
+import { MOCK_MEETINGS, ACTIVE_BRIEFING, WASTEFUL_BRIEFING } from "@/lib/mock-data"
 import type { ActiveBriefing } from "@/lib/mock-data"
-import { Users } from "lucide-react"
+import type { FilterState } from "./dashboard/MeetingSearch"
 
 export function Dashboard() {
   const [activeMeetingId, setActiveMeetingId] = useState("m3")
@@ -21,8 +23,39 @@ export function Dashboard() {
   const [generatingBriefings, setGeneratingBriefings] = useState<string[]>([])
   const [generatedBriefings, setGeneratedBriefings] = useState<string[]>(["m1", "m2", "m3", "m4"])
   const [notes, setNotes] = useState<Record<string, string>>({})
+  const [searchQuery, setSearchQuery] = useState("")
+  const [filters, setFilters] = useState<FilterState>({})
 
-  const activeMeeting = MOCK_MEETINGS.find(m => m.id === activeMeetingId)
+  // Filter meetings based on search and filters
+  const filteredMeetings = useMemo(() => {
+    return MOCK_MEETINGS.filter(meeting => {
+      // Search filter
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase()
+        const matchesTitle = meeting.title.toLowerCase().includes(query)
+        const matchesAttendee = meeting.attendees.some(a => a.name.toLowerCase().includes(query))
+        if (!matchesTitle && !matchesAttendee) return false
+      }
+
+      // Importance filter
+      if (filters.importance && meeting.importance !== filters.importance) {
+        return false
+      }
+
+      // Status filter
+      if (filters.status === "past" && !meeting.isPast) return false
+      if (filters.status === "upcoming" && meeting.isPast) return false
+
+      // Alerts filter
+      if (filters.hasAlert && (!meeting.alerts || meeting.alerts.length === 0)) {
+        return false
+      }
+
+      return true
+    })
+  }, [searchQuery, filters])
+
+  const activeMeeting = filteredMeetings.find(m => m.id === activeMeetingId)
   
   // Get the appropriate briefing based on the active meeting
   const getActiveBriefing = (): ActiveBriefing | null => {
@@ -55,19 +88,19 @@ export function Dashboard() {
         return
       }
 
-      const currentIndex = MOCK_MEETINGS.findIndex(m => m.id === activeMeetingId)
+      const currentIndex = filteredMeetings.findIndex(m => m.id === activeMeetingId)
 
       switch (e.key.toLowerCase()) {
         case "j":
           // Next meeting
-          if (currentIndex < MOCK_MEETINGS.length - 1) {
-            setActiveMeetingId(MOCK_MEETINGS[currentIndex + 1].id)
+          if (currentIndex < filteredMeetings.length - 1) {
+            setActiveMeetingId(filteredMeetings[currentIndex + 1].id)
           }
           break
         case "k":
           // Previous meeting
           if (currentIndex > 0) {
-            setActiveMeetingId(MOCK_MEETINGS[currentIndex - 1].id)
+            setActiveMeetingId(filteredMeetings[currentIndex - 1].id)
           }
           break
         case "f":
@@ -82,81 +115,68 @@ export function Dashboard() {
 
     document.addEventListener("keydown", handleKeyDown)
     return () => document.removeEventListener("keydown", handleKeyDown)
-  }, [activeMeetingId])
+  }, [activeMeetingId, filteredMeetings])
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <TopNav focusMode={focusMode} setFocusMode={setFocusMode} />
+      
+      {/* Metrics Navbar */}
+      <MetricsNavbar stats={{
+        meetingsToday: filteredMeetings.filter(m => !m.isPast).length,
+        criticalMeetings: filteredMeetings.filter(m => m.importance === "critical").length,
+        lowValueMeetings: filteredMeetings.filter(m => m.importance === "optional").length,
+        totalPrepTime: filteredMeetings.reduce((acc, m) => acc + (m.prepTime || 0), 0),
+        weeklyMeetingLoad: [2, 3, 4, 5, 2, 1, 0],
+        warmthCount: 4
+      }} />
 
-      <main className="max-w-[1800px] mx-auto px-8 py-8">
-        <div className="flex gap-8">
-          {/* Left Panel - Timeline */}
-          <div className="w-[400px] shrink-0 space-y-8 overflow-y-auto h-[calc(100vh-200px)] scrollbar-thin pr-3">
-            <StatsGrid />
-            
-            <AlertBanner 
-              dismissedAlerts={dismissedAlerts} 
-              setDismissedAlerts={setDismissedAlerts} 
+      <main className="flex gap-8 px-8 py-6 max-w-[1800px] mx-auto">
+        {/* Left Panel - Timeline & Search */}
+        <div className="w-[380px] shrink-0 space-y-5 overflow-y-auto h-[calc(100vh-280px)] scrollbar-thin pr-2">
+          {/* Search & Filter */}
+          <MeetingSearch 
+            onSearch={setSearchQuery}
+            onFilterChange={setFilters}
+          />
+          
+          {/* Meeting Suggestions */}
+          <MeetingSuggestions meetings={filteredMeetings.filter(m => !m.isPast)} />
+          
+          {/* Alerts */}
+          <AlertBanner 
+            dismissedAlerts={dismissedAlerts} 
+            setDismissedAlerts={setDismissedAlerts} 
+          />
+
+          {/* Timeline */}
+          <MeetingTimeline
+            meetings={filteredMeetings}
+            activeMeetingId={activeMeetingId}
+            setActiveMeetingId={setActiveMeetingId}
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+            generatingBriefings={generatingBriefings}
+            onGenerateBriefing={handleGenerateBriefing}
+          />
+        </div>
+
+        {/* Right Panel - Briefing */}
+        <div className="flex-1 overflow-y-auto h-[calc(100vh-280px)] scrollbar-thin pr-2">
+          {activeMeeting && (
+            <BriefingPanel
+              meeting={activeMeeting}
+              briefing={activeBriefing}
+              isLoading={isLoading}
+              checkedItems={checkedItems}
+              setCheckedItems={setCheckedItems}
+              overrides={overrides}
+              setOverrides={setOverrides}
+              onFocusMode={() => setFocusMode(true)}
+              notes={notes}
+              setNotes={setNotes}
             />
-
-            {/* Relationship Health Mini Card */}
-            <div className="bg-[var(--bg-card)] rounded-lg border border-[var(--border-subtle)] p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <Users className="w-4 h-4 text-[var(--accent-gold)]" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">
-                  Relationship Health
-                </span>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[var(--healthy-green)]" />
-                  <span className="text-[var(--text-secondary)]">{RELATIONSHIP_HEALTH.warm} Warm</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[var(--warning-amber)]" />
-                  <span className="text-[var(--text-secondary)]">{RELATIONSHIP_HEALTH.cooling} Cooling</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[var(--critical-red)]" />
-                  <span className="text-[var(--text-secondary)]">{RELATIONSHIP_HEALTH.cold} Cold</span>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-[var(--border-subtle)]">
-                <p className="text-xs text-[var(--text-muted)] mb-2">Overdue for outreach:</p>
-                <p className="text-xs text-[var(--critical-red)]">
-                  {RELATIONSHIP_HEALTH.coldContacts.join(", ")}
-                </p>
-              </div>
-            </div>
-
-            <MeetingTimeline
-              meetings={MOCK_MEETINGS}
-              activeMeetingId={activeMeetingId}
-              setActiveMeetingId={setActiveMeetingId}
-              selectedDay={selectedDay}
-              setSelectedDay={setSelectedDay}
-              generatingBriefings={generatingBriefings}
-              onGenerateBriefing={handleGenerateBriefing}
-            />
-          </div>
-
-          {/* Right Panel - Briefing */}
-          <div className="flex-1 overflow-y-auto h-[calc(100vh-200px)] scrollbar-thin pr-3">
-            {activeMeeting && (
-              <BriefingPanel
-                meeting={activeMeeting}
-                briefing={activeBriefing}
-                isLoading={isLoading}
-                checkedItems={checkedItems}
-                setCheckedItems={setCheckedItems}
-                overrides={overrides}
-                setOverrides={setOverrides}
-                onFocusMode={() => setFocusMode(true)}
-                notes={notes}
-                setNotes={setNotes}
-              />
-            )}
-          </div>
+          )}
         </div>
       </main>
 

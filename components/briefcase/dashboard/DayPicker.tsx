@@ -25,8 +25,8 @@ export function DayPicker({ selectedDay, setSelectedDay }: DayPickerProps) {
           className={cn(
             "w-8 h-8 rounded-full text-sm font-medium transition-all",
             i === selectedDay
-              ? "bg-[var(--accent-gold)] text-white"
-              : "bg-white text-[var(--text-secondary)] hover:bg-[var(--bg-card-hover)] border border-[var(--border-subtle)]"
+              ? "bg-[var(--accent-gold)] text-[var(--bg-primary)] font-semibold"
+              : "bg-[var(--bg-card)] text-[var(--text-secondary)] hover:bg-[var(--bg-card-hover)] border border-[var(--border-subtle)]"
           )}
           title={day.full}
         >

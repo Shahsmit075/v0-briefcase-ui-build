@@ -65,10 +65,10 @@ export function FocusMode({
           <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/10 pointer-events-none" />
 
           {/* Header */}
-          <div className="sticky top-0 bg-white border-b border-[var(--border-subtle)] px-8 py-4 z-10">
+          <div className="sticky top-0 bg-[var(--bg-card)] border-b border-[var(--border-subtle)] px-8 py-4 z-10">
             <div className="max-w-4xl mx-auto flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <h1 className="font-serif text-xl font-semibold text-[var(--text-primary)]">
+                <h1 className="font-sans text-xl font-bold text-[var(--text-primary)]">
                   {meeting.title}
                 </h1>
                 {meeting.status === "next" && meeting.minutesUntil && (

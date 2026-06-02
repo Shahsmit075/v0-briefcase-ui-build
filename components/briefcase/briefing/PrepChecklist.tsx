@@ -27,11 +27,11 @@ export function PrepChecklist({ checkedItems, setCheckedItems }: PrepChecklistPr
       transition={{ delay: 0.6 }}
       className="mb-8"
     >
-      <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-5">
         PREP CHECKLIST
       </h2>
-      <div className="bg-white rounded-lg border border-[var(--border-subtle)] p-4">
-        <div className="space-y-3">
+      <div className="bg-[var(--bg-card)] rounded-lg border border-[var(--border-subtle)] p-5">
+        <div className="space-y-3.5">
           {PREP_CHECKLIST.map((item, index) => {
             const isChecked = checkedItems[`prep-${index}`]
             return (
@@ -47,7 +47,7 @@ export function PrepChecklist({ checkedItems, setCheckedItems }: PrepChecklistPr
                 <div className={cn(
                   "shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-all mt-0.5",
                   isChecked 
-                    ? "bg-green-500 border-green-500" 
+                    ? "bg-[var(--healthy-green)] border-[var(--healthy-green)]" 
                     : "border-[var(--border-soft)] group-hover:border-[var(--accent-gold)]"
                 )}>
                   <AnimatePresence>
@@ -57,7 +57,7 @@ export function PrepChecklist({ checkedItems, setCheckedItems }: PrepChecklistPr
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
                       >
-                        <Check className="w-3 h-3 text-white" />
+                        <Check className="w-3 h-3 text-[var(--bg-primary)]" />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -80,13 +80,13 @@ export function PrepChecklist({ checkedItems, setCheckedItems }: PrepChecklistPr
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="mt-4 pt-4 border-t border-[var(--border-subtle)]"
+              className="mt-5 pt-5 border-t border-[var(--border-subtle)]"
             >
-              <div className="flex items-center gap-2 text-green-600">
-                <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+              <div className="flex items-center gap-2 text-[var(--healthy-green)]">
+                <div className="w-6 h-6 rounded-full bg-[var(--healthy-bg)] flex items-center justify-center">
                   <Check className="w-4 h-4" />
                 </div>
-                <span className="font-medium text-sm">You&apos;re ready for this meeting!</span>
+                <span className="font-semibold text-sm">You&apos;re ready for this meeting!</span>
               </div>
             </motion.div>
           )}
