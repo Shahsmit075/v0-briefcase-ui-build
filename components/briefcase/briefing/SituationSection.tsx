@@ -14,11 +14,11 @@ export function SituationSection({ situation }: SituationSectionProps) {
       transition={{ delay: 0.1 }}
       className="mb-8"
     >
-      <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-4">
         THE SITUATION
       </h2>
-      <div className="border-l-2 border-[var(--accent-gold)] pl-5">
-        <p className="text-[var(--text-primary)] leading-relaxed">
+      <div className="border-l-3 border-[var(--accent-gold)] pl-6">
+        <p className="text-[var(--text-primary)] leading-relaxed text-sm">
           {situation}
         </p>
       </div>

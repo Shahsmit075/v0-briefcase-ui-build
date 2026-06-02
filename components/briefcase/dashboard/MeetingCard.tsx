@@ -24,25 +24,22 @@ export function MeetingCard({ meeting, isActive, onClick, isGenerating, onGenera
   const isWasteful = meeting.health === "wasteful"
 
   const borderColor = {
-    critical: "border-l-red-500",
-    important: "border-l-blue-500",
-    routine: "border-l-gray-400",
-    optional: "border-l-gray-300"
+    critical: "border-l-[var(--critical-red)]",
+    important: "border-l-[var(--important-blue)]",
+    routine: "border-l-[var(--border-soft)]",
+    optional: "border-l-[var(--text-muted)]"
   }
 
   return (
     <div
       className={cn(
-        "bg-white rounded-lg border border-[var(--border-subtle)] p-4 cursor-pointer transition-all duration-200 border-l-4 hover:translate-x-0.5 hover:bg-[var(--bg-card-hover)]",
+        "bg-[var(--bg-card)] rounded-lg border border-[var(--border-subtle)] p-5 cursor-pointer transition-all duration-200 border-l-4 hover:bg-[var(--bg-card-hover)]",
         borderColor[meeting.importance],
-        isActive && "ring-2 ring-[var(--accent-gold)] ring-offset-2",
-        isPast && "opacity-60",
+        isActive && "ring-2 ring-[var(--accent-gold)] ring-offset-2 ring-offset-[var(--bg-primary)]",
+        isPast && "opacity-50",
         isNext && "border-l-[var(--accent-gold)]"
       )}
-      onClick={() => {
-        console.log("[v0] MeetingCard clicked:", meeting.id, meeting.title)
-        onClick()
-      }}
+      onClick={onClick}
     >
       {/* Header Row */}
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -51,12 +48,12 @@ export function MeetingCard({ meeting, isActive, onClick, isGenerating, onGenera
           {isWasteful && <HealthBadge health="wasteful" size="sm" />}
         </div>
         {isNext && meeting.minutesUntil && (
-          <Badge className="bg-amber-500/10 text-amber-600 border-amber-200 font-mono text-[10px] animate-pulse-gold">
+          <Badge className="bg-[var(--warning-bg)] text-[var(--warning-amber)] border-[var(--warning-amber)]/30 font-mono text-[10px] animate-pulse-gold">
             IN {meeting.minutesUntil} MIN
           </Badge>
         )}
         {isPast && (
-          <Badge variant="outline" className="text-[10px] text-green-600 border-green-200">
+          <Badge variant="outline" className="text-[10px] text-[var(--healthy-green)] border-[var(--healthy-green)]/30">
             <Check className="w-3 h-3 mr-1" />
             Done
           </Badge>
@@ -77,25 +74,26 @@ export function MeetingCard({ meeting, isActive, onClick, isGenerating, onGenera
       </p>
 
       {/* Avatars */}
-      <div className="flex -space-x-2 mb-3">
+      <div className="flex -space-x-2 mb-4">
         {meeting.attendees.slice(0, 4).map((attendee, i) => (
           <Avatar 
             key={i} 
             className={cn(
-              "h-7 w-7 border-2 border-white",
-              attendee.warmth === "warm" && "ring-1 ring-green-400",
-              attendee.warmth === "cooling" && "ring-1 ring-amber-400",
-              attendee.warmth === "cold" && "ring-1 ring-red-400"
+              "h-8 w-8 border-2",
+              attendee.warmth === "warm" && "border-[var(--healthy-green)] ring-1 ring-[var(--healthy-green)]/40",
+              attendee.warmth === "cooling" && "border-[var(--warning-amber)] ring-1 ring-[var(--warning-amber)]/40",
+              attendee.warmth === "cold" && "border-[var(--critical-red)] ring-1 ring-[var(--critical-red)]/40",
+              !attendee.warmth && "border-[var(--border-soft)]"
             )}
           >
-            <AvatarFallback className="text-[10px] bg-[var(--bg-primary)] text-[var(--text-secondary)]">
+            <AvatarFallback className="text-[10px] bg-[var(--bg-elevated)] text-[var(--text-secondary)] font-medium">
               {attendee.initials}
             </AvatarFallback>
           </Avatar>
         ))}
         {meeting.attendees.length > 4 && (
-          <div className="h-7 w-7 rounded-full bg-[var(--bg-primary)] border-2 border-white flex items-center justify-center">
-            <span className="text-[10px] text-[var(--text-secondary)]">
+          <div className="h-8 w-8 rounded-full bg-[var(--bg-elevated)] border-2 border-[var(--border-soft)] flex items-center justify-center">
+            <span className="text-[10px] text-[var(--text-secondary)] font-medium">
               +{meeting.attendees.length - 4}
             </span>
           </div>
@@ -123,10 +121,10 @@ export function MeetingCard({ meeting, isActive, onClick, isGenerating, onGenera
       {/* Worth Meeting Status */}
       {!isPast && meeting.briefingReady && (
         <div className={cn(
-          "text-xs font-medium",
-          meeting.worthMeeting === "yes" && "text-green-600",
-          meeting.worthMeeting === "no" && "text-red-600",
-          meeting.worthMeeting === "maybe" && "text-amber-600"
+          "text-xs font-semibold",
+          meeting.worthMeeting === "yes" && "text-[var(--healthy-green)]",
+          meeting.worthMeeting === "no" && "text-[var(--critical-red)]",
+          meeting.worthMeeting === "maybe" && "text-[var(--warning-amber)]"
         )}>
           {meeting.worthMeeting === "yes" && "✓ Worth Meeting"}
           {meeting.worthMeeting === "no" && (
@@ -143,7 +141,7 @@ export function MeetingCard({ meeting, isActive, onClick, isGenerating, onGenera
         <Button
           size="sm"
           variant="outline"
-          className="w-full mt-2 text-xs h-8 gap-1.5 border-dashed"
+          className="w-full mt-3 text-xs h-8 gap-1.5 border-dashed border-[var(--border-soft)] text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)]"
           onClick={(e) => {
             e.stopPropagation()
             onGenerate?.()
@@ -166,7 +164,7 @@ export function MeetingCard({ meeting, isActive, onClick, isGenerating, onGenera
 
       {/* Next Meeting Countdown */}
       {isNext && meeting.minutesUntil && (
-        <div className="mt-3 pt-3 border-t border-[var(--border-subtle)]">
+        <div className="mt-4 pt-4 border-t border-[var(--border-subtle)]">
           <CountdownTimer minutes={meeting.minutesUntil} size="md" />
         </div>
       )}

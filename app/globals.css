@@ -4,75 +4,75 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Briefcase Design System */
-  --bg-primary: #F5F5F2;
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #F8F8F6;
-  --bg-elevated: #FFFFFF;
+  /* Briefcase Design System - Dark Minimalist */
+  --bg-primary: #0C0C14;
+  --bg-card: #13131F;
+  --bg-card-hover: #1A1A2E;
+  --bg-elevated: #16162A;
   
-  --border-subtle: #ECECE8;
-  --border-soft: #E1E1DB;
+  --border-subtle: #1E1E30;
+  --border-soft: #252538;
   
-  --text-primary: #18181B;
-  --text-secondary: #71717A;
-  --text-muted: #A1A1AA;
+  --text-primary: #F5F0E8;
+  --text-secondary: #8A8A9A;
+  --text-muted: #4A4A5A;
   
-  --accent-gold: #D97706;
-  --accent-gold-dim: #B45309;
+  --accent-gold: #E8C547;
+  --accent-gold-dim: #C9A93E;
   
-  --critical-red: #DC2626;
-  --critical-bg: #FEF2F2;
+  --critical-red: #FF6B6B;
+  --critical-bg: #1F1218;
   
-  --healthy-green: #16A34A;
-  --healthy-bg: #F0FDF4;
+  --healthy-green: #4ADE80;
+  --healthy-bg: #0D1F14;
   
-  --warning-amber: #D97706;
-  --warning-bg: #FFF7ED;
+  --warning-amber: #FBBF24;
+  --warning-bg: #1F1A0E;
   
-  --important-blue: #2563EB;
+  --important-blue: #60A5FA;
   
-  --muted-grey: #A1A1AA;
+  --muted-grey: #6B7280;
 
   /* shadcn tokens mapped to Briefcase design */
-  --background: #F5F5F2;
-  --foreground: #18181B;
-  --card: #FFFFFF;
-  --card-foreground: #18181B;
-  --popover: #FFFFFF;
-  --popover-foreground: #18181B;
-  --primary: #D97706;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F5F5F2;
-  --secondary-foreground: #18181B;
-  --muted: #F5F5F2;
-  --muted-foreground: #71717A;
-  --accent: #FFF7ED;
-  --accent-foreground: #D97706;
-  --destructive: #DC2626;
-  --destructive-foreground: #FFFFFF;
-  --border: #ECECE8;
-  --input: #ECECE8;
-  --ring: #D97706;
-  --chart-1: #D97706;
-  --chart-2: #16A34A;
-  --chart-3: #2563EB;
-  --chart-4: #DC2626;
-  --chart-5: #A1A1AA;
+  --background: #0C0C14;
+  --foreground: #F5F0E8;
+  --card: #13131F;
+  --card-foreground: #F5F0E8;
+  --popover: #13131F;
+  --popover-foreground: #F5F0E8;
+  --primary: #E8C547;
+  --primary-foreground: #0C0C14;
+  --secondary: #1A1A2E;
+  --secondary-foreground: #F5F0E8;
+  --muted: #252538;
+  --muted-foreground: #8A8A9A;
+  --accent: #E8C547;
+  --accent-foreground: #0C0C14;
+  --destructive: #FF6B6B;
+  --destructive-foreground: #F5F0E8;
+  --border: #1E1E30;
+  --input: #252538;
+  --ring: #E8C547;
+  --chart-1: #E8C547;
+  --chart-2: #4ADE80;
+  --chart-3: #60A5FA;
+  --chart-4: #FF6B6B;
+  --chart-5: #6B7280;
   --radius: 0.5rem;
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #18181B;
-  --sidebar-primary: #D97706;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #FFF7ED;
-  --sidebar-accent-foreground: #D97706;
-  --sidebar-border: #ECECE8;
-  --sidebar-ring: #D97706;
+  --sidebar: #13131F;
+  --sidebar-foreground: #F5F0E8;
+  --sidebar-primary: #E8C547;
+  --sidebar-primary-foreground: #0C0C14;
+  --sidebar-accent: #1A1A2E;
+  --sidebar-accent-foreground: #E8C547;
+  --sidebar-border: #1E1E30;
+  --sidebar-ring: #E8C547;
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Playfair Display', 'Georgia', ui-serif, serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback', ui-monospace, monospace;
+  --font-sans: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Inter', 'Inter Fallback', ui-serif, serif;
+  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -151,10 +151,10 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: #E1E1DB;
+  background: #252538;
   border-radius: 3px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: #A1A1AA;
+  background: #4A4A5A;
 }

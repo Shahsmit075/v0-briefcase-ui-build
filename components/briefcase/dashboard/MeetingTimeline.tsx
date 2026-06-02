@@ -33,12 +33,12 @@ export function MeetingTimeline({
   const isToday = selectedDay === 2
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-[var(--text-muted)]" />
-          <span className="text-xs font-medium uppercase tracking-wider text-[var(--text-muted)]">
+          <Calendar className="w-4 h-4 text-[var(--accent-gold)]" />
+          <span className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">
             Today · {currentDate}
           </span>
         </div>
@@ -47,7 +47,7 @@ export function MeetingTimeline({
 
       {/* Timeline */}
       {isToday ? (
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           {meetings.map((meeting) => (
             <MeetingCard
               key={meeting.id}
@@ -60,11 +60,11 @@ export function MeetingTimeline({
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-lg border border-[var(--border-subtle)] border-dashed p-8 text-center">
-          <div className="text-[var(--text-muted)] text-sm mb-3">
+        <div className="bg-[var(--bg-card)] rounded-lg border border-[var(--border-subtle)] border-dashed p-8 text-center">
+          <div className="text-[var(--text-muted)] text-sm mb-4">
             No briefings generated yet for {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][selectedDay]}
           </div>
-          <button className="text-[var(--accent-gold)] text-sm font-medium hover:text-[var(--accent-gold-dim)]">
+          <button className="text-[var(--accent-gold)] text-sm font-semibold hover:text-[var(--accent-gold-dim)] transition-colors">
             Generate briefs for {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][selectedDay]} →
           </button>
         </div>

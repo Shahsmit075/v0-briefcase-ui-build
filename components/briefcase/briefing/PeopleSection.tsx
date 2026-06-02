@@ -18,27 +18,28 @@ export function PeopleSection({ people }: PeopleSectionProps) {
       transition={{ delay: 0.2 }}
       className="mb-8"
     >
-      <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-5">
         THE PEOPLE
       </h2>
-      <div className="space-y-4">
+      <div className="space-y-5">
         {people.map((person, index) => (
           <motion.div
             key={person.email}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 + index * 0.1 }}
-            className="bg-[var(--bg-primary)] rounded-lg p-5 border border-[var(--border-subtle)]"
+            className="bg-[var(--bg-elevated)] rounded-lg p-5 border border-[var(--border-subtle)]"
           >
             {/* Person Header */}
             <div className="flex items-start gap-4 mb-4">
               <Avatar className={cn(
-                "h-12 w-12 border-2 border-white",
-                person.warmth === "warm" && "ring-2 ring-green-400",
-                person.warmth === "cooling" && "ring-2 ring-amber-400",
-                person.warmth === "cold" && "ring-2 ring-red-400"
+                "h-12 w-12 border-2",
+                person.warmth === "warm" && "border-[var(--healthy-green)] ring-2 ring-[var(--healthy-green)]/30",
+                person.warmth === "cooling" && "border-[var(--warning-amber)] ring-2 ring-[var(--warning-amber)]/30",
+                person.warmth === "cold" && "border-[var(--critical-red)] ring-2 ring-[var(--critical-red)]/30",
+                !person.warmth && "border-[var(--border-soft)]"
               )}>
-                <AvatarFallback className="bg-white text-[var(--text-secondary)] text-sm font-medium">
+                <AvatarFallback className="bg-[var(--bg-card)] text-[var(--text-secondary)] text-sm font-medium">
                   {person.initials}
                 </AvatarFallback>
               </Avatar>
@@ -55,7 +56,7 @@ export function PeopleSection({ people }: PeopleSectionProps) {
 
             {/* Context */}
             <div className="mb-4">
-              <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wide mb-1">
+              <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-widest mb-2">
                 Context
               </h4>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -64,8 +65,8 @@ export function PeopleSection({ people }: PeopleSectionProps) {
             </div>
 
             {/* Tone Hint */}
-            <div className="mb-4 bg-white rounded-md p-3 border border-[var(--border-subtle)]">
-              <h4 className="text-xs font-medium text-[var(--accent-gold)] uppercase tracking-wide mb-1">
+            <div className="mb-4 bg-[var(--bg-card)] rounded-md p-4 border border-[var(--border-subtle)]">
+              <h4 className="text-xs font-semibold text-[var(--accent-gold)] uppercase tracking-widest mb-2">
                 Tone Hint
               </h4>
               <p className="text-sm text-[var(--text-primary)] leading-relaxed">
@@ -75,14 +76,14 @@ export function PeopleSection({ people }: PeopleSectionProps) {
 
             {/* Previous Meetings Timeline */}
             <div>
-              <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wide mb-2">
+              <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-widest mb-2">
                 Previous Meetings ({person.previousMeetings})
               </h4>
               <div className="flex items-center gap-2 overflow-x-auto pb-1">
                 {person.interactionHistory.map((meeting, i) => (
                   <span
                     key={i}
-                    className="shrink-0 px-2 py-1 bg-white rounded text-xs text-[var(--text-secondary)] border border-[var(--border-subtle)]"
+                    className="shrink-0 px-3 py-1.5 bg-[var(--bg-card)] rounded text-xs text-[var(--text-secondary)] border border-[var(--border-subtle)]"
                   >
                     {meeting}
                   </span>

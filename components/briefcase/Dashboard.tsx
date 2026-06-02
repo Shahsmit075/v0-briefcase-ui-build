@@ -20,6 +20,7 @@ export function Dashboard() {
   const [selectedDay, setSelectedDay] = useState(2) // Wednesday
   const [generatingBriefings, setGeneratingBriefings] = useState<string[]>([])
   const [generatedBriefings, setGeneratedBriefings] = useState<string[]>(["m1", "m2", "m3", "m4"])
+  const [notes, setNotes] = useState<Record<string, string>>({})
 
   const activeMeeting = MOCK_MEETINGS.find(m => m.id === activeMeetingId)
   
@@ -87,10 +88,10 @@ export function Dashboard() {
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <TopNav focusMode={focusMode} setFocusMode={setFocusMode} />
 
-      <main className="max-w-[1800px] mx-auto px-6 py-6">
-        <div className="flex gap-6">
+      <main className="max-w-[1800px] mx-auto px-8 py-8">
+        <div className="flex gap-8">
           {/* Left Panel - Timeline */}
-          <div className="w-[380px] shrink-0 space-y-6 overflow-y-auto h-[calc(100vh-180px)] scrollbar-thin pr-2">
+          <div className="w-[400px] shrink-0 space-y-8 overflow-y-auto h-[calc(100vh-200px)] scrollbar-thin pr-3">
             <StatsGrid />
             
             <AlertBanner 
@@ -99,30 +100,30 @@ export function Dashboard() {
             />
 
             {/* Relationship Health Mini Card */}
-            <div className="bg-white rounded-lg border border-[var(--border-subtle)] p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Users className="w-4 h-4 text-[var(--text-muted)]" />
-                <span className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
+            <div className="bg-[var(--bg-card)] rounded-lg border border-[var(--border-subtle)] p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <Users className="w-4 h-4 text-[var(--accent-gold)]" />
+                <span className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">
                   Relationship Health
                 </span>
               </div>
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-green-500" />
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[var(--healthy-green)]" />
                   <span className="text-[var(--text-secondary)]">{RELATIONSHIP_HEALTH.warm} Warm</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-amber-500" />
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[var(--warning-amber)]" />
                   <span className="text-[var(--text-secondary)]">{RELATIONSHIP_HEALTH.cooling} Cooling</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-red-500" />
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[var(--critical-red)]" />
                   <span className="text-[var(--text-secondary)]">{RELATIONSHIP_HEALTH.cold} Cold</span>
                 </div>
               </div>
-              <div className="mt-3 pt-3 border-t border-[var(--border-subtle)]">
-                <p className="text-xs text-[var(--text-muted)] mb-1">Overdue for outreach:</p>
-                <p className="text-xs text-red-600">
+              <div className="mt-4 pt-4 border-t border-[var(--border-subtle)]">
+                <p className="text-xs text-[var(--text-muted)] mb-2">Overdue for outreach:</p>
+                <p className="text-xs text-[var(--critical-red)]">
                   {RELATIONSHIP_HEALTH.coldContacts.join(", ")}
                 </p>
               </div>
@@ -140,7 +141,7 @@ export function Dashboard() {
           </div>
 
           {/* Right Panel - Briefing */}
-          <div className="flex-1 overflow-y-auto h-[calc(100vh-180px)] scrollbar-thin pr-2">
+          <div className="flex-1 overflow-y-auto h-[calc(100vh-200px)] scrollbar-thin pr-3">
             {activeMeeting && (
               <BriefingPanel
                 meeting={activeMeeting}
@@ -151,6 +152,8 @@ export function Dashboard() {
                 overrides={overrides}
                 setOverrides={setOverrides}
                 onFocusMode={() => setFocusMode(true)}
+                notes={notes}
+                setNotes={setNotes}
               />
             )}
           </div>

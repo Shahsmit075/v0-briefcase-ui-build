@@ -48,7 +48,7 @@ export function TopNav({ focusMode, setFocusMode }: TopNavProps) {
   return (
     <>
       {/* Demo Banner */}
-      <div className="bg-[var(--accent-gold)]/10 border-b border-[var(--accent-gold)]/20 px-4 py-2">
+      <div className="bg-[var(--accent-gold)]/10 border-b border-[var(--accent-gold)]/20 px-6 py-3">
         <div className="max-w-[1800px] mx-auto flex items-center justify-between text-sm">
           <span className="text-[var(--accent-gold)]">
             You&apos;re viewing demo data · Connect Google to see your real meetings
@@ -64,14 +64,14 @@ export function TopNav({ focusMode, setFocusMode }: TopNavProps) {
       </div>
 
       {/* Main Nav */}
-      <header className="bg-white border-b border-[var(--border-subtle)] px-6 py-3 sticky top-0 z-50">
+      <header className="bg-[var(--bg-card)] border-b border-[var(--border-subtle)] px-8 py-4 sticky top-0 z-50">
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-[var(--accent-gold)] rounded-lg flex items-center justify-center">
-              <Briefcase className="w-4 h-4 text-white" />
+              <Briefcase className="w-4 h-4 text-[var(--bg-primary)]" />
             </div>
-            <span className="font-serif text-xl font-semibold tracking-tight text-[var(--text-primary)]">
+            <span className="font-sans text-xl font-bold tracking-tight text-[var(--text-primary)]">
               BRIEFCASE
             </span>
             <Badge variant="outline" className="ml-2 text-[10px] font-mono text-[var(--accent-gold)] border-[var(--accent-gold)]/30">

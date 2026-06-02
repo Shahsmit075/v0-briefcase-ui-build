@@ -12,21 +12,21 @@ export function OpenThreadsSection({ threads }: OpenThreadsSectionProps) {
   const urgencyConfig = {
     high: {
       label: "HIGH",
-      borderColor: "border-l-red-500",
-      bgColor: "bg-red-50",
-      labelColor: "text-red-600 bg-red-100"
+      borderColor: "border-l-[var(--critical-red)]",
+      bgColor: "bg-[var(--critical-bg)]",
+      labelColor: "text-[var(--critical-red)] bg-[var(--critical-red)]/20"
     },
     medium: {
       label: "MED",
-      borderColor: "border-l-amber-500",
-      bgColor: "bg-amber-50",
-      labelColor: "text-amber-600 bg-amber-100"
+      borderColor: "border-l-[var(--warning-amber)]",
+      bgColor: "bg-[var(--warning-bg)]",
+      labelColor: "text-[var(--warning-amber)] bg-[var(--warning-amber)]/20"
     },
     low: {
       label: "LOW",
-      borderColor: "border-l-blue-500",
-      bgColor: "bg-blue-50",
-      labelColor: "text-blue-600 bg-blue-100"
+      borderColor: "border-l-[var(--important-blue)]",
+      bgColor: "bg-[var(--bg-elevated)]",
+      labelColor: "text-[var(--important-blue)] bg-[var(--important-blue)]/20"
     }
   }
 
@@ -38,10 +38,10 @@ export function OpenThreadsSection({ threads }: OpenThreadsSectionProps) {
         transition={{ delay: 0.3 }}
         className="mb-8"
       >
-        <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-4">
           OPEN THREADS
         </h2>
-        <div className="bg-[var(--bg-primary)] rounded-lg p-5 border border-[var(--border-subtle)] text-center">
+        <div className="bg-[var(--bg-elevated)] rounded-lg p-5 border border-[var(--border-subtle)] text-center">
           <p className="text-sm text-[var(--text-muted)]">
             No open threads detected — this appears to be an informational meeting
           </p>
@@ -57,10 +57,10 @@ export function OpenThreadsSection({ threads }: OpenThreadsSectionProps) {
       transition={{ delay: 0.3 }}
       className="mb-8"
     >
-      <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-5">
         OPEN THREADS
       </h2>
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         {threads.map((thread, index) => {
           const config = urgencyConfig[thread.urgency]
           return (
@@ -94,7 +94,7 @@ export function OpenThreadsSection({ threads }: OpenThreadsSectionProps) {
                 </p>
 
                 {/* Suggested Action */}
-                <div className="bg-white rounded-md p-3 ml-10 border border-[var(--border-subtle)]">
+                <div className="bg-[var(--bg-card)] rounded-md p-3 ml-10 border border-[var(--border-subtle)]">
                   <p className="text-sm text-[var(--text-primary)]">
                     <span className="text-[var(--accent-gold)] font-medium">→ </span>
                     {thread.suggestedAction}

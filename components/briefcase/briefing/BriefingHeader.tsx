@@ -32,9 +32,9 @@ export function BriefingHeader({ meeting, briefing, onRefresh, onFocusMode, isWa
     )}>
       {/* Wasteful Warning Banner */}
       {isWasteful && (
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 flex items-center gap-2">
-          <span className="text-amber-600">⚠️</span>
-          <span className="text-sm text-amber-700">
+        <div className="bg-[var(--warning-bg)] border border-[var(--warning-amber)]/30 rounded-lg p-4 mb-6 flex items-center gap-2">
+          <span>⚠️</span>
+          <span className="text-sm text-[var(--warning-amber)]">
             This meeting appears to be a recurring status update with no active decisions
           </span>
         </div>
@@ -43,26 +43,26 @@ export function BriefingHeader({ meeting, briefing, onRefresh, onFocusMode, isWa
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           {/* Title */}
-          <h1 className="font-serif text-2xl font-semibold text-[var(--text-primary)] mb-1">
+          <h1 className="font-sans text-2xl font-bold text-[var(--text-primary)] mb-2">
             {meeting.title}
           </h1>
 
           {/* Date & Time */}
-          <p className="text-sm text-[var(--text-secondary)] font-mono mb-4">
+          <p className="text-sm text-[var(--text-secondary)] font-mono mb-5">
             {currentDate} · {meeting.time} – {meeting.endTime} · {meeting.duration} minutes
           </p>
 
           {/* Attendees with warmth */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             {briefing.people.map((person) => (
               <div key={person.email} className="flex items-center gap-2">
                 <Avatar className={cn(
-                  "h-9 w-9 border-2 border-white",
-                  person.warmth === "warm" && "ring-2 ring-green-400",
-                  person.warmth === "cooling" && "ring-2 ring-amber-400",
-                  person.warmth === "cold" && "ring-2 ring-red-400"
+                  "h-10 w-10 border-2",
+                  person.warmth === "warm" && "border-[var(--healthy-green)] ring-2 ring-[var(--healthy-green)]/30",
+                  person.warmth === "cooling" && "border-[var(--warning-amber)] ring-2 ring-[var(--warning-amber)]/30",
+                  person.warmth === "cold" && "border-[var(--critical-red)] ring-2 ring-[var(--critical-red)]/30"
                 )}>
-                  <AvatarFallback className="bg-[var(--bg-primary)] text-[var(--text-secondary)] text-xs">
+                  <AvatarFallback className="bg-[var(--bg-elevated)] text-[var(--text-secondary)] text-xs font-medium">
                     {person.initials}
                   </AvatarFallback>
                 </Avatar>
@@ -85,10 +85,10 @@ export function BriefingHeader({ meeting, briefing, onRefresh, onFocusMode, isWa
                 <Badge 
                   variant="outline" 
                   className={cn(
-                    "text-xs cursor-help",
-                    briefing.confidence === "high" && "bg-green-50 text-green-600 border-green-200",
-                    briefing.confidence === "medium" && "bg-amber-50 text-amber-600 border-amber-200",
-                    briefing.confidence === "low" && "bg-gray-50 text-gray-500 border-gray-200"
+                    "text-xs cursor-help font-semibold",
+                    briefing.confidence === "high" && "bg-[var(--healthy-bg)] text-[var(--healthy-green)] border-[var(--healthy-green)]/30",
+                    briefing.confidence === "medium" && "bg-[var(--warning-bg)] text-[var(--warning-amber)] border-[var(--warning-amber)]/30",
+                    briefing.confidence === "low" && "bg-[var(--critical-bg)] text-[var(--critical-red)] border-[var(--critical-red)]/30"
                   )}
                 >
                   {briefing.confidence.toUpperCase()} CONFIDENCE
