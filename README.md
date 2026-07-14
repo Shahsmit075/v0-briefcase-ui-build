@@ -1,33 +1,36 @@
-# v0-briefcase-ui-build
+<div align="center">
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+  # Briefcase-ai: Instant context, zero prep.
 
-## Built with v0
+  ### *Your personalized, history-powered pre-meeting briefing assistant.*
+  **Stop scrolling through endless chat logs and stale email threads before your next call.**  
+  Briefcase-ai synthesizes your Google Chat history, cross-functional emails, and calendar context into dense, hyper-actionable opening talking points exactly when you need them.
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+</div>
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_7uHNIWrAVQoAv2SmkhoUiToVE5eQ)
+<hr />
 
-## Getting Started
+## ⚡ The Problem & The Solution
 
-First, run the development server:
+Async communication breaks down when things escalate. Entering critical syncs without knowing recent customer touchpoints, past grievances, or unreplied threads creates organizational friction. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+**Briefcase-ai** acts as your pre-meeting intelligence layer. It calculates relationship drift, scans unresolved threads, and formats an icebreaker to defuse tension or immediately unblock dependencies in the first 5 minutes of your meeting.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌟 Core Features
 
-## Learn More
+### 📅 Executive Dashboard & Focus Mode
+* **Daily Preparation Metrics:** Aggregates required preparation time, flags high-risk critical meetings, and surfaces low-value sessions that could have been an email.
+* **Relationship Health Matrix:** Continuously assesses communication latency to mark participant states as **Warm**, **Cooling**, or **Cold**.
 
-To learn more, take a look at the following resources:
+### 🧠 Pre-Meeting Intelligence Context
+* **The Situation Synthesis:** Contextualizes cross-functional roadmaps, ongoing project blockers, and immediate escalation points before you walk in.
+* **Historical Interaction Logs:** Tracks exact participant interaction dates, roles, past thread subjects, and unanswered message counts.
+* **Behavioral Tone Hints:** Learns participant communication profiles (e.g., *“Data-driven and direct. Lead with metrics, not narrative”*) to refine your approach.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+### 🎯 Actionable Openers & Open Threads
+* **"How To Open" Generation:** Uses specialized LLM prompting to craft a exact 30-second script addressing high-priority conflicts upfront.
+* **Ranked Escalation Tracks:** Sorts organizational friction into `HIGH`, `MED`, and `LOW` urgency threads with structural resolution suggestions.
+
+---
